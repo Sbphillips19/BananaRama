@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Particles from './RainingBananas/Particles';
+import Particles from './RainingBananas/Particles.tsx';
 import "./App.css";
 
 const App = () => {

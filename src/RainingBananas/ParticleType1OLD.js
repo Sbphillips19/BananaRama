@@ -1,27 +1,18 @@
 import React, { useEffect, useRef, createRef } from 'react'
-import ReactDOM from 'react-dom'
-import "../App.css";
 
 const TOP_OFFSET = window.innerHeight;
 const LEFT_OFFSET = 250;
 
-const generateWholeNumber = (min:number, max:number) => min + Math.floor(Math.random()*(max - min));
+const generateWholeNumber = (min, max) => min + Math.floor(Math.random()*(max - min));
 
-const SIZE_RANGE: [number, number] = [20, 70];
-const ROTATION_RANGE: [number, number]  = [0, 45];
+const SIZE_RANGE = [20, 70];
+const ROTATION_RANGE  = [0, 45];
 
-interface ParticleTypeInt {
-  part1Ref?: any;
-}
+class ParticleType1 extends React.PureComponent {
 
-class ParticleType1 extends React.PureComponent<ParticleTypeInt> {
-
-  style: { width: number; height: number; borderRadius: number; transform: string; left: number; top: number; };
-
-  private part1Ref: React.RefObject<SVGSVGElement>;
-
-  constructor(props: any) {
+  constructor(props) {
     super(props);
+    this.particleRef = React.createRef();
     const size = generateWholeNumber(...SIZE_RANGE);
     this.style = {
       width: size,
@@ -31,22 +22,18 @@ class ParticleType1 extends React.PureComponent<ParticleTypeInt> {
       left: generateWholeNumber(0, window.innerWidth),
       top: generateWholeNumber(-TOP_OFFSET, 0),
     };
-    this.part1Ref = React.createRef();
   }
 
-  // componentDidMount() {
-  //   const { left } = this.style;
-  //   setTimeout(() => {
-  //     debugger;
-  //     const node = this.props.part1Ref;     
-  //     if (node) {
-  //      node.style.top =
-  //       window.innerHeight + generateWholeNumber(0, TOP_OFFSET) + "px";
-  //     node.style.left =
-  //       left + generateWholeNumber(-LEFT_OFFSET, LEFT_OFFSET) + "px";
-  //     }
-  //   }, 0);
-  // }
+  componentDidMount() {
+    const { left } = this.style;
+    setTimeout(() => {
+      const node = this.particleRef.current;
+      node.style.top =
+        window.innerHeight + generateWholeNumber(0, TOP_OFFSET) + "px";
+      node.style.left =
+        left + generateWholeNumber(-LEFT_OFFSET, LEFT_OFFSET) + "px";
+    }, 0);
+  }
 
   render() {
     return (
@@ -55,7 +42,7 @@ class ParticleType1 extends React.PureComponent<ParticleTypeInt> {
         data-name="Capa 1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 500 500"
-        ref={this.part1Ref}
+        ref={this.particleRef}
         className="particle"
         style={this.style}
       >

@@ -1,22 +1,29 @@
 import React, { useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'
 
 const TOP_OFFSET = window.innerHeight;
 const LEFT_OFFSET = 250;
 
-const generateWholeNumber = (min, max) => min + Math.floor(Math.random()*(max - min));
+const generateWholeNumber = (min:number, max:number) => min + Math.floor(Math.random()*(max - min));
 
-const SIZE_RANGE = [15, 45];
-const ROTATION_RANGE = [-15, 15];
+const SIZE_RANGE: [number, number] = [15, 45];
+const ROTATION_RANGE: [number, number] = [-15, 15];
 
-class ParticleType2 extends React.PureComponent {
 
-    constructor(props) {
+interface ParticleTypeInt {
+  particleRef?: any;
+}
+
+class ParticleType2 extends React.PureComponent<ParticleTypeInt> {
+
+  style: { width: number; height: number; transform: string; left: number; top: number; transition: any, position: any };
+
+  private particleRef: React.RefObject<SVGSVGElement>;
+
+
+    constructor(props: any) {
       super(props);
-      this.particleRef = React.createRef();
       const size = generateWholeNumber(...SIZE_RANGE);
       this.style = {
-        // fill: generateRandomColor(),
         width: size,
         height: size,
         transform: `rotateZ(${generateWholeNumber(
@@ -24,26 +31,30 @@ class ParticleType2 extends React.PureComponent {
         )}deg)`,
         left: generateWholeNumber(0, window.innerWidth),
         top: generateWholeNumber(-TOP_OFFSET, 0),
+        transition: 'all 5s ease-out',
+        position: 'absolute'
       };
+      this.particleRef = React.createRef();
     }
   
     componentDidMount() {
       const { left } = this.style;
       setTimeout(() => {
         const node = this.particleRef.current;
-        node.style.top =
+        if (node) {        
+          node.style.top =
           window.innerHeight + generateWholeNumber(0, TOP_OFFSET) + "px";
         node.style.left =
           left + generateWholeNumber(-LEFT_OFFSET, LEFT_OFFSET) + "px";
         node.style.transform = `rotateZ(${generateWholeNumber(
           ...ROTATION_RANGE
         )}deg)`;
-      }, 0);
+        }
+      }, 100);
     }
   
     render() {
       return (
-        // <SvgBanana1 styleProps={this.style}/>
         <svg
           id="Banana1_svg__Capa_1"
           data-name="Capa 1"

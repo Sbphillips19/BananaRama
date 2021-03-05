@@ -1,19 +1,25 @@
 import React, { useEffect, useRef, createRef } from 'react'
-import ReactDOM from 'react-dom'
 
 const TOP_OFFSET = window.innerHeight;
 const LEFT_OFFSET = 250;
 
-const generateWholeNumber = (min, max) => min + Math.floor(Math.random()*(max - min));
+const generateWholeNumber = (min:number, max:number) => min + Math.floor(Math.random()*(max - min));
 
-const SIZE_RANGE = [20, 70];
-const ROTATION_RANGE  = [0, 45];
+const SIZE_RANGE: [number, number] = [20, 70];
+const ROTATION_RANGE: [number, number]  = [0, 45];
 
-class ParticleType1 extends React.PureComponent {
+interface ParticleTypeInt {
+  part1Ref?: any;
+}
 
-  constructor(props) {
+class ParticleType1 extends React.PureComponent<ParticleTypeInt> {
+
+  style: { width: number; height: number; borderRadius: number; transform: string; left: number; top: number; transition: any, position: any};
+
+  private particleRef: React.RefObject<SVGSVGElement>;
+
+  constructor(props: any) {
     super(props);
-    this.particleRef = React.createRef();
     const size = generateWholeNumber(...SIZE_RANGE);
     this.style = {
       width: size,
@@ -22,17 +28,22 @@ class ParticleType1 extends React.PureComponent {
       transform: `rotateZ(${generateWholeNumber(...ROTATION_RANGE)}deg)`,
       left: generateWholeNumber(0, window.innerWidth),
       top: generateWholeNumber(-TOP_OFFSET, 0),
+      transition: 'all 5s ease-out',
+      position: 'absolute'
     };
+    this.particleRef = React.createRef();
   }
 
   componentDidMount() {
     const { left } = this.style;
     setTimeout(() => {
-      const node = this.particleRef.current;
-      node.style.top =
+      const node = this.particleRef.current;     
+      if (node) {
+       node.style.top =
         window.innerHeight + generateWholeNumber(0, TOP_OFFSET) + "px";
       node.style.left =
         left + generateWholeNumber(-LEFT_OFFSET, LEFT_OFFSET) + "px";
+      }
     }, 0);
   }
 

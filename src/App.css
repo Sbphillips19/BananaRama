@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+
+  .particles {
+    position: fixed;
+    top: 0;
+  }
+    .particle {
+      position: absolute;
+      transition: all 5s ease-out;
+      width: '100%';
+    }
+  
+  
+  .button {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-top: -20px;
+    margin-left: -100px;
+    height: 40px;
+    width: 200px;
+    font-family: Roboto;
+    background-color: #34495e;
+    color: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .2s ease-out;
+  }
+  

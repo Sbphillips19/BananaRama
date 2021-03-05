@@ -17,7 +17,7 @@ const App = () => {
 
     setParticles([particles, id]);
     setTimeout(() => {
-      this.clean(id);
+      clean(id);
     }, 5000);
   }, []);
 

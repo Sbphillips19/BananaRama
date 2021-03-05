@@ -15,9 +15,7 @@ const App = () => {
     const id = App.id;
     App.id++;
 
-    this.setState({
-      particles: [...this.state.particles, id],
-    });
+    setParticles([particles, id]);
     setTimeout(() => {
       this.clean(id);
     }, 5000);
@@ -30,9 +28,6 @@ const App = () => {
       {particles.map((id) => (
         <Particles key={id} count={Math.floor(innerWidth / 20)} />
       ))}
-      <div className="button" onClick={this.handleOnClick}>
-        🍌 Banana Time
-      </div>
     </div>
   );
 };
